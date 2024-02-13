@@ -16,19 +16,36 @@ class Quiz {
 
     // Display the current question
     public displayQuestion(): void {
-        
+        this.selectedOption = null;
+        const currentQ = this.questions[this.questionIndex];
+        const questionElement = document.getElementById('question');
+        const optionContainer = document.getElementById('options');
+
+        if (questionElement && optionContainer) {
+            questionElement.innerText = currentQ.question;
+            optionContainer.innerHTML = '';
+            currentQ.options.forEach((option: string) => {
+                const button = document.createElement('button');
+                button.innerText = option;
+                button.addEventListener('click', () => this.selectedOption = option);
+                optionContainer.appendChild(button);
+            })
+        }
     }
 
     // Select an option
     private selectOption(option: string): void {
-        
+        this.selectedOption = option;
+        const options = document.querySelectorAll('#options button');
+        options.forEach((opt: Element) => {
+
+        });
     }
 
     // Submit the selected answer
     public submitAnswer(): void {
-        
     }
-    
+
 }
 
 // Define your questions
@@ -43,10 +60,10 @@ const questions: IQuestion[] = [
     { question: "Which planet is known as the Red Planet?", options: ["Mars", "Jupiter", "Saturn"], answer: "Mars" },
     { question: "What gas do plants absorb from the atmosphere for photosynthesis?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen"], answer: "Carbon Dioxide" },
     { question: "Who wrote 'Romeo and Juliet'?", options: ["William Shakespeare", "Charles Dickens", "Jane Austen"], answer: "William Shakespeare" },
-  ];
+];
 
 // Create a new Quiz instance and set up event listeners
 const quiz = new Quiz(questions);
 document.addEventListener('DOMContentLoaded', () => {
-    
+    quiz.displayQuestion();
 });
